@@ -90,11 +90,39 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                     ),
+
                                     //Delete Icon
                                     IconButton(
                                       onPressed: () async {
-                                        await DatabaseMethods()
-                                            .deleteEmployeeDetails(ds["Id"]);
+                                        return await showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: Text('Delete Details'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  DatabaseMethods()
+                                                      .deleteEmployeeDetails(
+                                                    ds["Id"],
+                                                  );
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Yes',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                       },
                                       icon: const Icon(
                                         Icons.delete,
