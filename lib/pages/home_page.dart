@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                                         return await showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            title: Text('Delete Details'),
+                                            title: const Text('Delete Details'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {

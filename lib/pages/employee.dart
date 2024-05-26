@@ -88,31 +88,63 @@ class _EmployeeState extends State<Employee> {
                 Center(
                   child: MyButton(
                     onPressed: () async {
-                      String id = randomAlpha(10);
-                      Map<String, dynamic> employeeInfoMap = {
-                        "Name": nameController.text,
-                        "Age": ageController.text,
-                        "Id": id,
-                        "Location": locationController.text,
-                        "Job": jobController.text,
-                      };
-                      await DatabaseMethods()
-                          .addEmployeeDetails(employeeInfoMap, id)
-                          .then(
-                            (value) => showDialog(
-                              context: context,
-                              builder: (context) => const AlertDialog(
-                                title: Text(
-                                  'Emplyee details added succesfully!',
+                      if (nameController.text.isNotEmpty &&
+                          ageController.text.isNotEmpty &&
+                          locationController.text.isNotEmpty &&
+                          jobController.text.isNotEmpty) {
+                        String id = randomAlpha(10);
+                        Map<String, dynamic> employeeInfoMap = {
+                          "Name": nameController.text,
+                          "Age": ageController.text,
+                          "Id": id,
+                          "Location": locationController.text,
+                          "Job": jobController.text,
+                        };
+                        await DatabaseMethods()
+                            .addEmployeeDetails(employeeInfoMap, id)
+                            .then(
+                              (value) => showDialog(
+                                context: context,
+                                builder: (context) => const AlertDialog(
+                                  title: Text(
+                                    'Emplyee details added succesfully!',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                        Navigator.pop(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text(
+                              'Please fill all fields!',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  'OK',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                      Navigator.pop(context);
+                            ],
+                          ),
+                        );
+                      }
                     },
                   ),
                 )
